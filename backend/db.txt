@@ -1,0 +1,6 @@
+Database :: sms
+Tables :: 
+admin : id,
+        name,
+        username,
+        password
