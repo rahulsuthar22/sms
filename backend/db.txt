@@ -1,6 +1,5 @@
-Database :: sms
-Tables :: 
-admin : id,
-        name,
-        username,
-        password
+CREATE DATABASE sms;
+
+CREATE TABLE admin(
+  
+);

@@ -23,5 +23,27 @@ Node-postgres
 
 ````bash
     npm install pg
+
+bcryptJs
+
+````bash
+    npm install bcryptjs
+
+express-validator
+
+````bash
+    npm install express-validator
+```
+
+express-validator
+
+````bash
+    npm install express-validator
+```
+
+jsonwebtoken
+
+````bash
+    npm install jsonwebtoken
 ```
 `````
