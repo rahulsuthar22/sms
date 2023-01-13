@@ -16,34 +16,36 @@ Nodemon
 
 Dotenv
 
-`````bash
+```bash
     npm install dotenv --save
 ```
+
 Node-postgres
 
-````bash
+```bash
     npm install pg
+```
 
 bcryptJs
 
-````bash
+```bash
     npm install bcryptjs
+```
 
 express-validator
 
-````bash
+```bash
     npm install express-validator
 ```
 
 express-validator
 
-````bash
+```bash
     npm install express-validator
 ```
 
 jsonwebtoken
 
-````bash
+```bash
     npm install jsonwebtoken
 ```
-`````
