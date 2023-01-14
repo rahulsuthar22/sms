@@ -1,19 +1,20 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import InputAdornment from "@mui/material/InputAdornment";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import loginBg from "./login_bg.jpg";
+import loginBg from "../images/login_bg.jpg";
 import logo from "../images/logo.png";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 function Copyright(props: any) {
   return (
@@ -21,7 +22,7 @@ function Copyright(props: any) {
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {"Copyright © "}
         <Link color="inherit" href="https://mui.com/">
-          Your Website
+          Schoolar
         </Link>{" "}
         {new Date().getFullYear()}
         {"."}
@@ -41,6 +42,12 @@ export default function Login() {
       password: data.get("password"),
     });
   };
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,10 +64,9 @@ export default function Login() {
             backgroundPosition: "center",
             display: "flex",
             justifyContent: "center",
-            opacity: 2,
           }}
         >
-          <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square style={{ margin: 3, borderRadius: "10px" }}>
+          <Grid item xs={12} sm={8} md={4} component="div" style={{ margin: 3, borderRadius: "10px", backgroundColor: "white" }}>
             <Box
               sx={{
                 my: 8,
@@ -75,21 +81,62 @@ export default function Login() {
                 Sign in
               </Typography>
               <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                <TextField margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus />
-                <TextField margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" />
+                <TextField
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <EmailOutlinedIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  size="small"
+                  color="warning"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  type="email"
+                  inputProps={{ inputMode: "email" }}
+                />
+                <TextField
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  type={showPassword ? "text" : "password"}
+                  size="small"
+                  color="warning"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  id="password"
+                  autoComplete="current-password"
+                />
                 {/* <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" /> */}
-                <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                <Box component="div"></Box>
+                <Button type="submit" color="warning" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                   Sign In
                 </Button>
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
+                <Grid container sx={{ justifyContent: "space-between" }}>
+                  <Grid item>
+                    <Link href="#" variant="body2" color="#ed6c02" style={{ textDecoration: "none" }}>
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
+                    <Link href="#" variant="body2" color="#ed6c02" style={{ textDecoration: "none" }}>
+                      Don't have an account? Sign Up
                     </Link>
                   </Grid>
                 </Grid>
