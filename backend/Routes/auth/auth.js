@@ -48,7 +48,7 @@ router.post(
 );
 
 //Route 2 : Authentic a admin using login
-router.post("/login", [body("username", "Enter the valid username !").isLength({ min: 3 }), body("password", "Enter the valid password !").isLength({ min: 5 })], async (req, res) => {
+router.post("/login", [body("email", "Enter the valid email !").isEmail({ min: 3 }), body("password", "Enter the valid password !").isLength({ min: 5 })], async (req, res) => {
   try {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
@@ -57,7 +57,7 @@ router.post("/login", [body("username", "Enter the valid username !").isLength({
     }
 
     //hashing algorithm
-    const user = await db.query("SELECT * FROM admin where username = $1", [req.body.username]);
+    const user = await db.query("SELECT * FROM admin where email = $1", [req.body.email]);
     if (!user) {
       return res.status(400).json({ success, err: "Please try to login with the correct credentials username" });
     }

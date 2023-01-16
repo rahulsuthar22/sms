@@ -4,6 +4,8 @@ const app = express();
 require("dotenv").config();
 const router = require("./Routes/auth/auth");
 app.use(express.json());
+var cors = require("cors");
+app.use(cors());
 
 //Creating Endpoints
 
@@ -21,7 +23,7 @@ app.get("/", async (req, res) => {
 app.use("/api/auth", router);
 
 //Listening the server
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, "192.168.43.28", () => {
   //   console.log(process.env.PORT);
   console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
