@@ -49,3 +49,9 @@ jsonwebtoken
 ```bash
     npm install jsonwebtoken
 ```
+
+cors
+
+```bash
+    npm install cors
+```
