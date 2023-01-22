@@ -25,5 +25,6 @@ app.use("/api/auth", router);
 //Listening the server
 app.listen(process.env.PORT, "192.168.43.28", () => {
   //   console.log(process.env.PORT);
-  console.log(`Server is running on http://localhost:${process.env.PORT}`);
+  console.log(`Server is running on http://192.168.43.28:${process.env.PORT}`);
+  // console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
