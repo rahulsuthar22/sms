@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import loginBg from "../images/login_bg.jpg";
 import logo from "../images/logo.png";
-import { FormControlLabel, Checkbox, FormControl, FormLabel, Radio, RadioGroup } from "@mui/material";
+import { FormControlLabel, Checkbox, FormControl } from "@mui/material";
 // import { Form } from "react-router-dom";
 
 function Copyright(props: any) {
@@ -30,8 +30,8 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function Login() {
-  const marginTop = { marginTop: 5 }
-  const txtstyle = { margin: '8px 0' }
+  const marginTop = { marginTop: 5 };
+  const txtstyle = { margin: "8px 0" };
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -64,23 +64,16 @@ export default function Login() {
                 Sign Up
               </Typography>
               <form>
-                <TextField fullWidth style={txtstyle} label='Name' placeholder="Enter your name" />
-                <TextField fullWidth style={txtstyle} label='Email' placeholder="Enter your email" />
-                <FormControl component="fieldset" style={marginTop}>
-                  <FormLabel component="legend">Gender</FormLabel>
-                  <RadioGroup aria-label="gender" name="gender" style={{ display: 'initial' }}>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                  </RadioGroup>
-                </FormControl>
-                <TextField fullWidth label='Phone Number' placeholder="Enter your phone number" />
-                <TextField fullWidth label='Password' placeholder="Enter your password" />
-                <TextField fullWidth label='Confirm Password' placeholder="Confirm your password" />
-                <FormControlLabel
-                  control={<Checkbox name="checkedA" />}
-                  label="I accept the terms and conditions."
-                />
-                <Button type='submit' variant='contained' color='primary'>Sign up</Button>
+                <TextField fullWidth style={txtstyle} label="Name" placeholder="Enter your name" />
+                <TextField fullWidth style={txtstyle} label="Email" placeholder="Enter your email" />
+                <TextField fullWidth style={txtstyle} label="username" placeholder="Enter your username" />
+                <FormControl component="fieldset" style={marginTop}></FormControl>
+                <TextField fullWidth style={txtstyle} label="Password" placeholder="Enter your password" />
+                <TextField fullWidth style={txtstyle} label="Confirm Password" placeholder="Confirm your password" />
+                <FormControlLabel control={<Checkbox name="checkedA" />} label="I accept the terms and conditions." />
+                <Button type="submit" variant="contained" color="primary">
+                  Sign up
+                </Button>
               </form>
               <Copyright sx={{ mt: 5 }} />
             </Box>

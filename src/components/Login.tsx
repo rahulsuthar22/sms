@@ -15,8 +15,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 // import { Form } from "react-router-dom";
-import * as Yup from 'yup'
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import * as Yup from "yup";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { instance } from "../api/instance";
+import { useNavigate } from "react-router";
 
 function Copyright(props: any) {
   return (
@@ -36,7 +38,6 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function Login() {
-
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -44,22 +45,27 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const btnstyle = { margin: '8px 0' }
-  const txtstyle = { margin: '8px 0' }
+  const btnstyle = { margin: "8px 0" };
+  const txtstyle = { margin: "8px 0" };
 
   const initialValues = {
-    username: '',
-    password: '',
-  }
+    email: "",
+    password: "",
+  };
   const validationSchema = Yup.object().shape({
-    username: Yup.string().email('please enter valid email').required("Required"),
-    password: Yup.string().required("Required")
-  })
-  const onSubmit = (values) => {
-    console.log(values)
-
-
-  }
+    email: Yup.string().email("please enter valid email").required("Required"),
+    password: Yup.string().required("Required"),
+  });
+  const navigate = useNavigate();
+  const onSubmit = async (values) => {
+    console.log(values);
+    const results = await instance.post("auth/login", values);
+    console.log("results:", results.data);
+    if (results.data.success === true) {
+      localStorage.setItem("token", results.data.authtoken);
+      navigate("/dashboard");
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -95,8 +101,16 @@ export default function Login() {
               <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                 {(props) => (
                   <Form>
-                    <Field as={TextField} size='small' color='warning' style={txtstyle} label='Email' name="username"
-                      placeholder='Enter email address' fullWidth required
+                    <Field
+                      as={TextField}
+                      size="small"
+                      color="warning"
+                      style={txtstyle}
+                      label="Email"
+                      name="email"
+                      placeholder="Enter email address"
+                      fullWidth
+                      required
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
@@ -105,32 +119,34 @@ export default function Login() {
                         ),
                       }}
                       error
-                      helperText={<ErrorMessage name="username" />}
+                      helperText={<ErrorMessage name="email" />}
                     />
-                    <Field as={TextField} size='small' color='warning' style={txtstyle} label='Password' name="password"
-                      placeholder='Enter password'
-                      type={showPassword ? 'text' : 'password'}
-                      fullWidth required
+                    <Field
+                      as={TextField}
+                      size="small"
+                      color="warning"
+                      style={txtstyle}
+                      label="Password"
+                      name="password"
+                      placeholder="Enter password"
+                      type={showPassword ? "text" : "password"}
+                      fullWidth
+                      required
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
+                            <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
                               {showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                           </InputAdornment>
-                        )
+                        ),
                       }}
                       error
-                      helperText={<ErrorMessage name="password" />} />
-                    <Button type='submit' color='warning' variant="contained"
-                      style={btnstyle} fullWidth
-                    >Sign In</Button>
-
+                      helperText={<ErrorMessage name="password" />}
+                    />
+                    <Button type="submit" color="warning" variant="contained" style={btnstyle} fullWidth>
+                      Sign In
+                    </Button>
                   </Form>
                 )}
               </Formik>
