@@ -120,7 +120,7 @@ export default function SideNavBar() {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Drawer variant="permanent" open={open}>
+                <Drawer variant="permanent" style={{ backgroundColor: 'red' }} open={open}>
                     <DrawerHeader>
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -133,7 +133,6 @@ export default function SideNavBar() {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    backgroundColor: "blue"
                                 }}
                             >
                                 <ListItemIcon
@@ -156,7 +155,6 @@ export default function SideNavBar() {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
-                                    backgroundColor: "blue"
 
                                 }}
                             >
