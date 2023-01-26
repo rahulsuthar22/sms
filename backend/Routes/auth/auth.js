@@ -57,19 +57,19 @@ router.post("/login", [body("email", "Enter the valid email !").isEmail({ min: 3
     }
 
     //hashing algorithm
-    const user = await db.query("SELECT * FROM admin where email = $1", [req.body.email]);
-    if (!user) {
+    const user = await db.query("SELECT * FROM admin WHERE email = $1", [req.body.email]);
+    if (user.rowCount === 0) {
       return res.status(400).json({ success, err: "Please try to login with the correct credentials username" });
     }
-
-    const passwordCompare = await bcrypt.compare(req.body.password, user.rows[0].password);
+    console.log(user);
+    const passwordCompare = await bcrypt.compare(req.body.password, user.rows[0]?.password);
     if (!passwordCompare) {
       return res.status(400).json({ success, err: "Please try to login with the correct credentials password" });
     }
 
     //payload for sign method of jwt token
     const data = {
-      user: { id: user.rows[0].id },
+      user: { id: user.rows[0]?.id },
     };
 
     const authToken = jwt.sign(data, JWT_SECRET);

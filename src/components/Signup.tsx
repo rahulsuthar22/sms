@@ -1,4 +1,3 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,8 +8,14 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import loginBg from "../images/login_bg.jpg";
 import logo from "../images/logo.png";
-import { FormControlLabel, Checkbox, FormControl, FormLabel, Radio, RadioGroup } from "@mui/material";
-// import { Form } from "react-router-dom";
+import { FormControlLabel, Checkbox, FormControl, IconButton } from "@mui/material";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import React from "react";
+import { InputAdornment } from "@material-ui/core";
+import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
+import MailIcon from '@mui/icons-material/Mail';
+import LockIcon from '@mui/icons-material/Lock';
 
 function Copyright(props: any) {
   return (
@@ -29,9 +34,31 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function Login() {
-  const marginTop = { marginTop: 5 }
-  const txtstyle = { margin: '8px 0' }
+export default function Siggnup() {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("please enter valid email").required("Required"),
+    password: Yup.string().required("Required"),
+    username: Yup.string().required("Required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm Password is required'),
+
+  });
+  const onSubmit = () => {
+
+  };
+  const txtstyle = { margin: "8px 0", color: 'waring' };
+  const btnstyle = { margin: "8px 0" };
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -63,25 +90,96 @@ export default function Login() {
               <Typography component="h1" variant="h5">
                 Sign Up
               </Typography>
-              <form>
-                <TextField fullWidth style={txtstyle} label='Name' placeholder="Enter your name" />
-                <TextField fullWidth style={txtstyle} label='Email' placeholder="Enter your email" />
-                <FormControl component="fieldset" style={marginTop}>
-                  <FormLabel component="legend">Gender</FormLabel>
-                  <RadioGroup aria-label="gender" name="gender" style={{ display: 'initial' }}>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                  </RadioGroup>
-                </FormControl>
-                <TextField fullWidth label='Phone Number' placeholder="Enter your phone number" />
-                <TextField fullWidth label='Password' placeholder="Enter your password" />
-                <TextField fullWidth label='Confirm Password' placeholder="Confirm your password" />
-                <FormControlLabel
-                  control={<Checkbox name="checkedA" />}
-                  label="I accept the terms and conditions."
-                />
-                <Button type='submit' variant='contained' color='primary'>Sign up</Button>
-              </form>
+              <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                {(props) => (
+                  <Form>
+                    <Field
+                      as={TextField}
+                      size="small"
+                      color="warning"
+                      style={txtstyle}
+                      label="Name"
+                      name="Name"
+                      placeholder="Enter your name"
+                      fullWidth
+                      required
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
+                      helperText={<ErrorMessage name="username" />}
+                    />
+                    <Field
+                      as={TextField}
+                      size="small"
+                      color="warning"
+                      style={txtstyle}
+                      label="Email"
+                      name="email"
+                      placeholder="Enter email address"
+                      fullWidth
+                      required
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <MailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      helperText={<ErrorMessage name="email" />}
+                    />
+                    <Field
+                      as={TextField}
+                      size="small"
+                      color="warning"
+                      style={txtstyle}
+                      label="Password"
+                      name="password"
+                      placeholder="Enter password"
+                      type={showPassword ? "text" : "password"}
+                      fullWidth
+                      required
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      helperText={<ErrorMessage name="password" />}
+                    />
+                    <Field
+                      as={TextField}
+                      size="small"
+                      color="warning"
+                      style={txtstyle}
+                      label="Confirm Password"
+                      name="Confirm password"
+                      placeholder="Enter password again"
+                      type="password"
+                      fullWidth
+                      required
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LockIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      helperText={<ErrorMessage name="confirmPassword" />}
+                    />
+                    <Button type="submit" color="warning" variant="contained" style={btnstyle} fullWidth>
+                      Sign Up
+                    </Button>
+                  </Form>
+                )}
+              </Formik>
+
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Grid>
